@@ -1,4 +1,4 @@
-import { useEffect, useReducer } from "react";
+import { useEffect, useReducer, useState } from "react";
 import { todoReducer } from "../todoReducer";
 
 const initTodo = () => {
@@ -8,6 +8,8 @@ const initTodo = () => {
 export const useTodo = () => {
 
     const [state, dispatch] = useReducer(todoReducer, [], initTodo);
+    
+    const [todo, setTodo] = useState({});
     
     useEffect(() => {
         localStorage.setItem('todos', JSON.stringify( state ) );
@@ -35,13 +37,24 @@ export const useTodo = () => {
         })
     }
 
-    const editarTarea = ( id ) => {
-        console.log(id);
-        dispatch({
-            type: '[TODO] editar todo',
-            payload: id,
-        })
+    const editarTarea = ( tarea ) => {
+        
+
+        if(Object.keys(todo).length > 0){
+
+            dispatch({
+                type: '[TODO] editar todo',
+                payload: tarea,
+            })
+            return;
+        }
+
+        setTodo(tarea);
+
     };
+
+    
+
 
     const tareasLength = state.length;
 
@@ -55,5 +68,7 @@ export const useTodo = () => {
         editarTarea,
         tareasLength,
         tareasPendientes,
+        todo,
+        setTodo,
     }
 }

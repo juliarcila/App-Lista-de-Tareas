@@ -18,7 +18,8 @@ export const todoReducer = (state = [], action) => {
                 return tarea;
             });
 
-        
+        case '[TODO] editar todo':
+            return state.map( tarea => (tarea.id === action.payload.id) ? action.payload : tarea );
     
         default:
             return state;

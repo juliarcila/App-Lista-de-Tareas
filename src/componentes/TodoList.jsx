@@ -1,6 +1,6 @@
 import { TodoItem } from "./TodoItem"
 
-export const TodoList = ({tareas, eliminarTarea, completarTarea, editarTarea}) => {
+export const TodoList = ({tareas, eliminarTarea, completarTarea, editarTarea, todo, setTodo}) => {
 
 
 
@@ -9,7 +9,7 @@ export const TodoList = ({tareas, eliminarTarea, completarTarea, editarTarea}) =
             {
                 tareas.map(tarea => {
                     return (
-                        <TodoItem key={tarea.id} tarea={ tarea }  eliminarTarea={ eliminarTarea } completarTarea={completarTarea} editarTarea={ editarTarea } />
+                        <TodoItem key={tarea.id} tarea={ tarea }  eliminarTarea={ eliminarTarea } completarTarea={completarTarea} editarTarea={ editarTarea } todo={todo} setTodo={setTodo}/>
                     )
                 })
             }

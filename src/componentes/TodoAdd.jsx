@@ -1,20 +1,48 @@
+import { useEffect, useState } from "react";
 import { useForm } from "../hooks/useForm"
 
-export const TodoAdd = ({agregarTarea}) => {
+export const TodoAdd = ({agregarTarea, todo, setTodo, editarTarea}) => {
 
-    const {contenido, onInputChange, onResetForm} = useForm({
-        contenido: '',
-    });
+
+    
+    // const {contenido, onInputChange, onResetForm} = useForm({
+    //     contenido: '',
+    // });
+
+    const [contenido, setContenido] = useState('');
+
+    useEffect(() => {
+        if(Object.keys(todo).length > 0){
+            setContenido(todo.contenido);
+        }
+    }, [todo])
+    
+    
 
     const onSubmit = (e) => {
         e.preventDefault();
         if(contenido.trim().length <= 1) return;
+
+        if(Object.keys(todo).length > 0){
+
+            editarTarea({
+                id: todo.id,
+                contenido,
+                done: todo.done,
+            })
+
+            setTodo({});
+            setContenido('');
+            return;
+        }
+
+        
         agregarTarea({
             id: new Date().getTime(),
             contenido,
             done: false,
         } );
-        onResetForm();
+        setContenido('');
     };
 
     return (
@@ -26,7 +54,7 @@ export const TodoAdd = ({agregarTarea}) => {
                     placeholder="Escibe tu tarea"
                     className="form-control"
                     name="contenido"
-                    onChange={ onInputChange }
+                    onChange={ (e) => setContenido(e.target.value) }
                     value={ contenido }
                 />
                 
@@ -34,7 +62,9 @@ export const TodoAdd = ({agregarTarea}) => {
                     className="btn btn-outline-primary mt-2" 
                     type="submit"
                 >
-                    Agregar
+                    {
+                        (Object.keys(todo).length > 0) ? 'Actualizar' : 'Agregar'
+                    }
                 </button>
             </form>
         </>

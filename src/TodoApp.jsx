@@ -9,7 +9,7 @@ import { todoReducer } from "./todoReducer"
 
 export const TodoApp = () => {
 
-    const { state, agregarTarea, eliminarTarea, completarTarea, editarTarea, tareasLength, tareasPendientes} = useTodo();
+    const { state, agregarTarea, eliminarTarea, completarTarea, editarTarea, tareasLength, tareasPendientes, todo, setTodo} = useTodo();
 
     return (
         <>
@@ -19,7 +19,7 @@ export const TodoApp = () => {
 
                 <div className="row">
                     <div className="col-5">
-                        <TodoAdd agregarTarea={ agregarTarea } />
+                        <TodoAdd agregarTarea={ agregarTarea } todo={todo} setTodo={setTodo} editarTarea={editarTarea}/>
                     </div>
 
                     <div className="col-7">
@@ -27,7 +27,7 @@ export const TodoApp = () => {
                         <h2>Tareas pendientes: {tareasPendientes}</h2>
                         <hr />
 
-                        <TodoList tareas={ state } eliminarTarea={ eliminarTarea } completarTarea={ completarTarea } editarTarea={editarTarea} />
+                        <TodoList tareas={ state } eliminarTarea={ eliminarTarea } completarTarea={ completarTarea } editarTarea={editarTarea} todo={todo} setTodo={setTodo}/>
                     </div>
                 </div>
             </div>
